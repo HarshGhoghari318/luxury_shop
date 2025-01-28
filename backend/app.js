@@ -5,7 +5,9 @@ import cookieParser from "cookie-parser";
 import userRoutes from './routes/userRoutes.js'
 import ownerRouter from './routes/ownerRoutes.js'
 import productRouter from './routes/productRoutes.js'
+import dotenv from 'dotenv'
 
+dotenv.config(); 
 const app = express();
 app.use(cors({  
     origin:"http://localhost:5173",
