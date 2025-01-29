@@ -7,7 +7,8 @@ import Cookies from "js-cookie";
 import { Buffer } from "buffer";
 function Cart() {
   const { user, setUser } = useContext(userContext);
-  const [total,setTotal]=useState(0)
+  const [bill, setBill] = useState(false);
+  const [total, setTotal] = useState(0);
 
   const navigate = useNavigate();
   // const getuser = async () => {
@@ -22,19 +23,17 @@ function Cart() {
   //     toast.error("Failed to get user details");
   //   }
   // };
-  const handlePlus =async (itemId) => {
+  const handlePlus = async (itemId) => {
     console.log(itemId);
     const response = await axios.post(
       "http://localhost:3000/users/pmngQuantity",
       {
         id: itemId,
-        email: Cookies.get("email"), 
+        email: Cookies.get("email"),
       }
     );
     console.log(response.data);
 
-
-    
     // const updatedCart = user.cart.map((item) =>
     //   item._id === itemId ? { ...item, quantity: item.quantity + 1 } : item
     // );
@@ -56,7 +55,6 @@ function Cart() {
         : item
     );
 
-    
     setUser((prevUser) => ({
       ...prevUser,
       cart: updatedCart,
@@ -76,7 +74,7 @@ function Cart() {
       "http://localhost:3000/users/removeFCart",
       {
         id: itemId,
-        email: Cookies.get("email"), 
+        email: Cookies.get("email"),
       }
     );
 
@@ -87,38 +85,39 @@ function Cart() {
     }
   };
 
-  const handleCheckOut = async ()=>{
-
+  const handleCheckOut = () => {
+    setBill(true);
+     
+  };
+  const handleYes= async () => {
     try {
+      setBill(false)
       console.log(user?.cart);
-      const response =await axios.post("http://localhost:3000/users/orders", 
-        {
-          data: user?.cart,
-          email: Cookies.get("email"), 
-        }
-      )
+      const response = await axios.post("http://localhost:3000/users/orders", {
+        data: user?.cart,
+        email: Cookies.get("email"),
+      });
       if (response.status === 200) {
         setUser((prevUser) => ({
           ...prevUser,
-          cart: [], 
+          cart: [],
         }));
-        toast.success("Checkout successful!");
+        
       }
-      
-      
     } catch (error) {
       console.error("Error checking out:", error);
       toast.error("An error occurred while checking out.");
-      
     }
-    
-
-
   }
 
-  useEffect(()=>{
-    setTotal(user?.cart.reduce((acc, item) => acc + (item.price * (1 - item.discount / 100)),0))
-  },[user?.cart])
+  useEffect(() => {
+    setTotal(
+      user?.cart.reduce(
+        (acc, item) => acc + item.price * (1 - item.discount / 100),
+        0
+      )
+    );
+  }, [user?.cart]);
 
   return (
     <div className="h-screen w-full bg-zinc-900 text-gray-200">
@@ -139,12 +138,10 @@ function Cart() {
         <ul className="space-y-2 rounded-lg h-[90%] overflow-y-auto w-full">
           {user?.cart &&
             user.cart.map((item, i) => (
-              
               <li
                 key={i}
                 className="flex items-center bg-zinc-800 rounded-lg p-4 shadow-md"
               >
-                
                 {/* Product Image */}
                 <div className="w-[150px] h-[150px]">
                   <img
@@ -161,7 +158,10 @@ function Cart() {
                   <h1 className="text-xl font-semibold text-orange-300">
                     {item.name}
                   </h1>
-                  <h2 className="text-lg">Price: $<span className="line-through">{item.price}</span><span className=" ml-1 text-xs">{item.discount}%</span></h2>
+                  <h2 className="text-lg">
+                    Price: $<span className="line-through">{item.price}</span>
+                    <span className=" ml-1 text-xs">{item.discount}%</span>
+                  </h2>
 
                   {/* Quantity Control */}
                   <div className="flex items-center space-x-4">
@@ -195,11 +195,63 @@ function Cart() {
         </ul>
         <div className="flex justify-between items-center border-t-2 border-orange-500 pt-4">
           <h2 className="text-2xl font-semibold">Total: ${total}</h2>
-          <button onClick={handleCheckOut} className="px-6 py-2 bg-orange-500 text-white rounded-lg text-lg hover:bg-orange-400">
+          <button
+            onClick={handleCheckOut}
+            className="px-6 py-2 bg-orange-500 text-white rounded-lg text-lg hover:bg-orange-400"
+          >
             Checkout
           </button>
         </div>
       </div>
+      {bill && (
+        <div className="h-[80%] p-4 w-[60%] flex gap-6 left-[20%] top-[15%] absolute backdrop-blur-md bg-white bg-opacity-10 rounded-lg">
+          <div
+            onClick={() => setBill(false)}
+            className="h-[25px] w-[30px] text-center absolute left-[95%] top-[1%] bg-black rounded-2xl text-white cursor-pointer 
+                   transition-transform duration-500 ease-in-out hover:scale-110 hover:bg-red-500"
+          >
+            <i className="ri-close-large-line"></i>
+          </div>
+          <div className="h-[60vh] w-full  mt-6 rounded-md">
+            <section className="mb-4 h-full rounded-md w-auto bg-white overflow-y-scroll p-4">
+              {user?.cart.map((order, i) => (
+                <div key={i} className="bg-gray-800 p-4 rounded-lg flex items-center gap-4 mb-4">
+                  <img
+                    src={`data:image/jpeg;base64,${Buffer.from(
+                      order.image.data
+                    ).toString("base64")}`}
+                    alt="Product"
+                    className="w-20 h-20 rounded-lg"
+                  />
+                  <div>
+                    <p className="text-lg font-medium">{order.name}</p>
+                    <p className="text-gray-400 ">
+                      Status:
+                      <span className="ml-1 text-green-600">Success</span>
+                      <span className="ml-2">Delivered✅</span>{" "}
+                    </p>
+                    <button className="mt-2 text-orange-500 hover:underline">
+                      View Details
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </section>
+            <div className="h-[20%] items-center flex justify-between w-full">
+              <h1 className="mb-1 text-3xl text-orange-300">Total Bill:<span className="text-white">${total}</span></h1>
+              <div className="flex gap-2 ">
+              <button onClick={handleYes} className="px-6 py-2 text-2xl bg-green-700 rounded-md">
+                Yes
+              </button>
+            
+              <button onClick={() => setBill(false)} className="px-6 py-2 text-2xl bg-red-700 rounded-md">
+                No
+              </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

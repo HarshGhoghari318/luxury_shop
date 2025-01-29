@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom";
 import Main from "./pages/Main";
-import Shop from "./pages/Shop";
 import Kids from "./pages/Kids";
 import Men from "./pages/Men";
 import Women from "./pages/Women";
@@ -14,15 +13,10 @@ import Owner from "./pages/Owner/Owner.jsx";
 import AddProduct from "./pages/Owner/AddProduct.jsx";
 import AllProduct from "./pages/Owner/AllProduct";
 import AllUsers from "./pages/Owner/AllUsers";
-
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Main />}>
-        {/* <Route path="shop" element={<Shop />} />
-        <Route path="kids" element={<Kids />} />
-        <Route path="men" element={<Men />} />
-        <Route path="women" element={<Women />} /> */}
       </Route>
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
@@ -38,7 +32,7 @@ function App() {
         <Route path="addProduct" element={<AddProduct />} />
         <Route path="users" element={<AllUsers />} />
         <Route path="allProduct" element={<AllProduct />} />
-        <Route path="editProduct" element={<AddProduct />} />
+        {/* <Route path="editProduct" element={<EditProduct/>} /> */}
       </Route>
     </Routes>
   );

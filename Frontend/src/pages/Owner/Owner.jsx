@@ -73,7 +73,7 @@ function Owner() {
               >
                 Add Product
               </NavLink>
-              <NavLink
+              {/* <NavLink
                 to="editProduct"
                 className={({ isActive }) =>
                   isActive
@@ -82,7 +82,7 @@ function Owner() {
                 }
               >
                 Edit Product
-              </NavLink>
+              </NavLink> */}
             </ul>
           </div>
           <div className="h-full w-[80vw] bg-black">
