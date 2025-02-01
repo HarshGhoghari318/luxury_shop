@@ -165,10 +165,7 @@ router.post('/Eprofile', async (req, res) => {
     }
   });
 
-router.post('/', async (req, res) => {
-  console.log("hello")
-  
-})
+
 
 
 export default router;
