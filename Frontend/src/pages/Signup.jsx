@@ -78,6 +78,7 @@ function Signup() {
                 <label className="block text-sm font-medium mb-2">Email</label>
                 <input
                   onChange={handleChange}
+                  pattern=".+@gmail\.com"
                   type="email"
                   name="email"
                   value={formdata.email}
@@ -134,6 +135,7 @@ function Signup() {
                 <label className="block text-sm font-medium mb-2">Mobile Number</label>
                 <input
                   onChange={handleChange}
+                  maxlength="10"
                   type="tel"
                   name="mobile"
                   value={formdata.mobile}

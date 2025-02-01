@@ -108,6 +108,7 @@ function Cart() {
           ...prevUser,
           cart: [],
         }));
+        toast.success("CheckOut successfully!");
         
       }
     } catch (error) {

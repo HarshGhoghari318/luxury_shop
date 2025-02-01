@@ -22,7 +22,7 @@ const ProfilePage = () => {
     <div className="min-h-screen bg-zinc-950 text-white">
       {/* Header */}
       <header className="flex border-t-2 border-b-2 bor border-orange-300 justify-between items-center p-6 bg-zinc-950">
-        <a onClick={navigateBack} className="text-2xl font-bold text-orange-500"><i className="ri-arrow-left-line mr-2"></i>LXS</a>
+        <a onClick={navigateBack} className="text-2xl font-bold text-orange-500"><i className="cursor-pointer ri-arrow-left-line mr-2"></i>LXS</a>
         <nav className="flex gap-6">
           <a href="/user/home" className="text-gray-300 hover:text-orange-500">Home</a>
           <a href="/user/men" className="text-gray-300 hover:text-orange-500">Men</a>
@@ -62,7 +62,39 @@ const ProfilePage = () => {
 
         {/* Order History */}
         <h3 className="text-xl font-semibold mb-6">Order History</h3>
-        <section className="mb-12 h-[40vh] rounded-md w-auto bg-white overflow-y-scroll p-4">
+        {
+          user?.order.length === 0? (
+            <p className="text-center text-gray-400">No orders found.</p>
+          ) : (<section className="mb-12 h-[40vh] rounded-md w-auto bg-white overflow-y-scroll p-4">
+            {
+              user?.order.map((order, i) =>(
+           
+              <div className="bg-gray-800 p-4 rounded-lg flex items-center gap-4 mb-1">
+              <img
+                src={`data:image/jpeg;base64,${Buffer.from(
+                  order.image.data
+                ).toString("base64")}`}
+                alt="Product"
+                className="w-20 h-20 rounded-lg"
+              />
+              <div>
+                <p className="text-lg font-medium">{order.name}</p>
+                <p className="text-gray-400 ">Status:<span className="ml-1 text-green-600">Success</span><span className="ml-2">Delivered✅</span> </p>
+                <button className="mt-2 text-orange-500 hover:underline">
+                  View Details
+                </button>
+              </div>
+            </div>
+  
+              ))
+            }
+           
+            
+            
+          </section>)
+
+        }
+        {/* <section className="mb-12 h-[40vh] rounded-md w-auto bg-white overflow-y-scroll p-4">
           {
             user?.order.map((order, i) =>(
          
@@ -88,7 +120,7 @@ const ProfilePage = () => {
          
           
           
-        </section>
+        </section> */}
 
         {/* Wishlist */}
        

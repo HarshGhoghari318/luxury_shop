@@ -65,6 +65,7 @@ function Login() {
             <input
               name="email"
               onChange={handleChange}
+              pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$"
               type="email"
               value={formdata.email}
               className="w-full p-2 rounded bg-zinc-800 text-white focus:outline-orange-300"
