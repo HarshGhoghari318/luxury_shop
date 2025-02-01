@@ -2,13 +2,15 @@ import { userContext } from "@/utils/UserContext";
 import React, { useContext } from "react";
 import Cookies from 'js-cookie';
 import { Buffer } from "buffer";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 const ProfilePage = () => {
   const navigater=useNavigate()
   const {user,setUser}=useContext(userContext)
   console.log(user)
 
-
+   const navigateBack=()=>{
+    navigater(-1);
+   }
    const handlelogOut = ()=>{
       Cookies.remove('email');
       setUser(null);
@@ -20,7 +22,7 @@ const ProfilePage = () => {
     <div className="min-h-screen bg-zinc-950 text-white">
       {/* Header */}
       <header className="flex border-t-2 border-b-2 bor border-orange-300 justify-between items-center p-6 bg-zinc-950">
-        <a href="/" className="text-2xl font-bold text-orange-500">LXS</a>
+        <a onClick={navigateBack} className="text-2xl font-bold text-orange-500"><i className="ri-arrow-left-line mr-2"></i>LXS</a>
         <nav className="flex gap-6">
           <a href="/user/home" className="text-gray-300 hover:text-orange-500">Home</a>
           <a href="/user/men" className="text-gray-300 hover:text-orange-500">Men</a>
@@ -53,9 +55,9 @@ const ProfilePage = () => {
     <span className="font-bold text-orange-500">Address:</span>{" "}
     {user?.address || "N/A"}
   </p>
-  <button className="bg-orange-500 hover:bg-orange-600 text-black px-6 py-2 rounded-lg">
+  <Link to={"/Eprofile"} className="bg-orange-500 hover:bg-orange-600 text-black px-6 py-2 rounded-lg">
     Edit Profile
-  </button>
+  </Link>
 </section>
 
         {/* Order History */}

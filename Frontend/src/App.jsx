@@ -13,6 +13,7 @@ import Owner from "./pages/Owner/Owner.jsx";
 import AddProduct from "./pages/Owner/AddProduct.jsx";
 import AllProduct from "./pages/Owner/AllProduct";
 import AllUsers from "./pages/Owner/AllUsers";
+import EditProfile from "./pages/User/EditProfile";
 function App() {
   return (
     <Routes>
@@ -34,6 +35,7 @@ function App() {
         <Route path="allProduct" element={<AllProduct />} />
         {/* <Route path="editProduct" element={<EditProduct/>} /> */}
       </Route>
+      <Route path="/Eprofile" element={<EditProfile/>}/>
     </Routes>
   );
 }

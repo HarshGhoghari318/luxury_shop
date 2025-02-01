@@ -142,5 +142,30 @@ router.post('/orders', async (req, res) => {
   }
 });
 
+router.post('/Eprofile', async (req, res) => {
+  // console.log(req.body)
+    try {
+      const user = await userModel.findOneAndUpdate(
+        { email: req.query.email },  
+        { 
+          $set: {                      
+            username: req.body.username,
+            sex: req.body.sex,
+            address: req.body.address,
+            mobileNo: req.body.mobileNo
+          } 
+        },        
+        { new: true }               
+      );
+      // console.log(user)
+      res.status(200).json({ message: 'profile update successfully', data: user });
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      res.status(500).send('Internal server error');
+    }
+  });
+
+
+
 
 export default router;

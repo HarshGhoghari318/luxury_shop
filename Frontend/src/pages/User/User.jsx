@@ -12,21 +12,7 @@ function User() {
   const {user,getUser} = useContext(userContext)
  console.log(user)
   
-  // const getuser = async () => {
-  //   try {
-  //     const response = await axios.get("http://localhost:3000/users/user", {
-  //       params: {
-  //         email: Cookies.get("email"),
-  //       },
-  //     });
-  //     setUser(response.data.data);
-
-  //     // console.log(response.data.data[0].cart.length)// Populate user state
-  //   } catch (error) {
-  //     console.error(error);
-  //     toast.error("Failed to get user details");
-  //   }
-  // };
+  
   useEffect(() => {
     getUser()
 
@@ -47,9 +33,9 @@ function User() {
       <header className="bg-zinc-900 border-t-2 border-b-2 border-orange-300 text-orange-300 p-4 w-full h-[10%] shadow-md">
         <div className="container mx-auto flex items-center justify-between">
           {/* Logo */}
-          <NavLink to="/" className="text-2xl font-bold hover:text-orange-500">
+          <a className="text-2xl font-bold hover:text-orange-500">
             LXS
-          </NavLink>
+          </a>
 
           {/* Navigation Links */}
           <nav className="flex space-x-8">

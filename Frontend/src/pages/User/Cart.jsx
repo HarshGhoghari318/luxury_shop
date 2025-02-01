@@ -2,7 +2,7 @@ import { userContext } from "@/utils/UserContext";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { toast,ToastContainer } from "react-toastify";
 import Cookies from "js-cookie";
 import { Buffer } from "buffer";
 function Cart() {
@@ -86,7 +86,13 @@ function Cart() {
   };
 
   const handleCheckOut = () => {
-    setBill(true);
+    console.log(user?.cart)
+    if(user?.cart.length !== 0){
+      setBill(true);
+    }else{
+      toast.error("no items to check out")
+    }
+    
      
   };
   const handleYes= async () => {
@@ -252,6 +258,7 @@ function Cart() {
           </div>
         </div>
       )}
+      <ToastContainer/>
     </div>
   );
 }
