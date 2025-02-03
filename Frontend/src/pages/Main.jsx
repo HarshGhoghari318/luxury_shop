@@ -1,13 +1,32 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { activeContext } from "../utils/Context.jsx"; // Corrected import
+import { activeContext } from "../utils/Context.jsx"; 
+import Loader from "react-js-loader";
+import { useState } from "react";
 
 function Main() {
+  const [Loading, setLoading] = useState(true);
   const { active, setActive } = useContext(activeContext); // Consume context
   
+  setTimeout(() => {
+    setLoading(false); 
+  }, 3000);
+
+
   return (
-    <>
-      <div className="flex flex-col h-screen w-full bg-zinc-900">
+    Loading === true ? (
+    <div className="h-screen w-full bg-zinc-800 flex items-center justify-center">
+      <Loader
+        type="spinner-circle"
+        bgColor={"#ff8000"}
+        color={"gray"}
+        
+        size={300}
+      />
+      
+    </div>
+    ) :<>
+     <div className="flex flex-col h-screen w-full bg-zinc-900">
         <div
           id="shop"
           className="flex justify-between items-center gap-3 border-t-2 border-b-2 border-orange-300 p-4 mt-2 h-[12%] w-full"
@@ -477,6 +496,8 @@ function Main() {
         </div>
       </div>
     </>
+     
+
   );
 }
 
