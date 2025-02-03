@@ -33,6 +33,7 @@ const UsersPage = () => {
                 <th className="py-3 px-4 border">Email</th>
                 <th className="py-3 px-4 border">MobileNo</th>
                 <th className="py-3 px-4 border">sex</th>
+                <th className="py-3 px-4 border">Order✅</th>
                 <th className="py-3 px-4 border">Image</th>
               </tr>
             </thead>
@@ -50,6 +51,7 @@ const UsersPage = () => {
                     <td className="py-3 px-4 border">{user.email}</td>
                     <td className="py-3 px-4 border">{user.mobileNo}</td>
                     <td className="py-3 px-4 border">{user.sex}</td>
+                    <td className="py-3 px-4 border">{user.order.length}</td>
                     <td className="py-3 px-4 border text-center">
                       <img
                         src="/dummy.png"
