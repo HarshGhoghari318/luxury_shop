@@ -28,9 +28,11 @@ const UsersPage = () => {
           <table className="w-full border-collapse border border-gray-300 bg-white rounded-lg">
             <thead>
               <tr className="bg-orange-300 text-white">
-                <th className="py-3 px-4 border">#</th>
+                <th className="py-3 px-4 border">No</th>
                 <th className="py-3 px-4 border">Name</th>
                 <th className="py-3 px-4 border">Email</th>
+                <th className="py-3 px-4 border">MobileNo</th>
+                <th className="py-3 px-4 border">sex</th>
                 <th className="py-3 px-4 border">Image</th>
               </tr>
             </thead>
@@ -46,6 +48,8 @@ const UsersPage = () => {
                     <td className="py-3 px-4 border text-center">{index + 1}</td>
                     <td className="py-3 px-4 border">{user.username}</td>
                     <td className="py-3 px-4 border">{user.email}</td>
+                    <td className="py-3 px-4 border">{user.mobileNo}</td>
+                    <td className="py-3 px-4 border">{user.sex}</td>
                     <td className="py-3 px-4 border text-center">
                       <img
                         src="/dummy.png"

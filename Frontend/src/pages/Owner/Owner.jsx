@@ -35,7 +35,7 @@ function Owner() {
           <h1 className="text-4xl font-semibold mr-[35%] text-center">
             Admin Panel
           </h1>
-          <span onClick={handlelogOut} className="text-2xl flex items-center font-semibold gap-2">
+          <span onClick={handlelogOut} className="cursor-pointer text-2xl flex items-center font-semibold gap-2">
             LogOut
             <FaSignOutAlt  />
           </span>{" "}
