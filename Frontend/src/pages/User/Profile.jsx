@@ -80,9 +80,7 @@ const ProfilePage = () => {
               <div>
                 <p className="text-lg font-medium">{order.name}</p>
                 <p className="text-gray-400 ">Status:<span className="ml-1 text-green-600">Success</span><span className="ml-2">Delivered✅</span> </p>
-                <button className="mt-2 text-orange-500 hover:underline">
-                  View Details
-                </button>
+                <p className="text-gray-400">Price: ${order.price}</p>
               </div>
             </div>
   
