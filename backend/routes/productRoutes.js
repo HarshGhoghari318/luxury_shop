@@ -23,8 +23,20 @@ router.post("/create", upload.single("image"), async (req, res) => {
 });
 router.get("/sendData", async (req, res) => {
   const { category, item } = req.query;
-  console.log(item);
-  if (item === "all" && category === "men") {
+  if(category === "all"){
+    let products = await productModel.find();
+    res.json({ data: products });
+  }
+  else if (category === "men") {
+    let products = await productModel.find({ category: "men" });
+    res.json({ data: products });
+  }else if(category === "women"){
+    let products = await productModel.find({ category: "women" });
+    res.json({ data: products });
+  }else if(category === "kids"){
+    let products = await productModel.find({ category: "kids" });
+    res.json({ data: products });
+  }else if (item === "all" && category === "men") {
     let products = await productModel.find({ category: "men" });
     res.json({ data: products });
   } else if (category === "men") {
