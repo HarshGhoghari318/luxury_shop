@@ -5,7 +5,7 @@ import productModel from "../models/product_model.js";
 const router = express.Router();
 
 router.post("/create", upload.single("image"), async (req, res) => {
-  const { price, discount, name, category } = req.body;
+  const { price, discount, name, category, subCategory } = req.body;
 
   try {
     const product = await productModel.create({
@@ -13,6 +13,7 @@ router.post("/create", upload.single("image"), async (req, res) => {
       price,
       discount,
       category,
+      subCategory,
       image: req.file.buffer,
     });
     res.json({ message: "Product created successfully", data: product });
@@ -21,22 +22,30 @@ router.post("/create", upload.single("image"), async (req, res) => {
   }
 });
 router.get("/sendData", async (req, res) => {
-  const { category } = req.query;
-
-  if (category === "all") {
-    let products = await productModel.find();
-    res.json({ data: products });
-  } else if (category === "men") {
+  const { category, item } = req.query;
+  console.log(item);
+  if (item === "all" && category === "men") {
     let products = await productModel.find({ category: "men" });
     res.json({ data: products });
-  } else if (category === "women") {
+  } else if (category === "men") {
+    let products = await productModel.find({category: "men",subCategory: item});
+    console.log(products);
+    res.json({ data: products });
+  } else if (item === "all" && category === "women") {
     let products = await productModel.find({ category: "women" });
     res.json({ data: products });
-  } else {
-    if (category === "kids") {
-      let products = await productModel.find({ category: "kids" });
-      res.json({ data: products });
-    }
+  } else if (category === "women") {
+    let products = await productModel.find({ category: "women",subCategory: item });
+    res.json({ data: products });
+  } else if (item === "all" && category === "kids") {
+    let products = await productModel.find({ category: "kids" });
+    res.json({ data: products });
+  } else if (category === "kids") {
+    let products = await productModel.find({
+      category: "kids",
+      subCategory: item,
+    });
+    res.json({ data: products });
   }
 });
 router.get("/products/:id", async function (req, res) {

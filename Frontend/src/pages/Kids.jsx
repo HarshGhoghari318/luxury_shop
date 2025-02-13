@@ -10,19 +10,22 @@ import { userContext } from "@/utils/UserContext";
 function Kids() {
   const [products, setProducts] = useState(null);
   const { user ,setUser} =useContext(userContext)
-  const [KidClothes, setKidclothes] = useState([]);
-  const allkidsClothes = async () => {
+  const [KidProduct, setKidProduct] = useState([]);
+  const [item,setItems]=useState("all")
+  
+  const allkidsProduct = async () => {
     try {
       const response = await axios.get(
         `http://localhost:3000/product/sendData`,
         {
           params: {
             category: "kids",
+            item: item
           },
         }
       );
 
-      setKidclothes(response.data.data);
+      setKidProduct(response.data.data);
       
     } catch (error) {
       console.log(error);
@@ -99,12 +102,23 @@ function Kids() {
     }
   };
   useEffect(() => {
-    allkidsClothes();
-  }, [products]);
+    allkidsProduct();
+  }, [products,item]);
 
   return (
     <div className="flex gap-2 text-white flex-wrap overflow-y-auto h-full  w-full p-4">
-      {KidClothes.map((item, i) => {
+       <div className="absolute top-15 mt-2">
+       <select 
+       onChange={(e) => setItems(e.target.value)}
+       className="p-2  rounded-lg bg-zinc-700 text-white">
+         <option value="all">All</option>
+         <option value="goggles">Goggles</option>
+         <option value="shoes">Shoes</option>
+         <option value="clothes">Clothes</option>
+         <option value="belt">Belt</option>
+       </select>
+     </div>
+      {KidProduct.map((item, i) => {
         return (
           <Link
             onClick={() => setProducts(item)}
