@@ -105,7 +105,7 @@ function Women() {
 
   useEffect(() => {
     allWomenProduct();
-  }, [products,item]);q
+  }, [products,item]);
 
   return (
     <div className="flex gap-2 text-white flex-wrap overflow-y-auto h-full  w-full p-4">
