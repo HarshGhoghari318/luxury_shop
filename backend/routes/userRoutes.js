@@ -68,7 +68,7 @@ router.post("/addtoCart", async (req, res) => {
     // console.log(isItemInCart);
 
     if (!isItemInCart) {
-      user.cart.push(new mongoose.Types.ObjectId(req.body.id));
+      user.cart?.push(new mongoose.Types.ObjectId(req.body.id));
       await user.save();
       console.log("Addtocat:",user.cart);
       res.status(200).json({ message: "Item added to cart successfully!" });

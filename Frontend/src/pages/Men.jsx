@@ -9,22 +9,24 @@ import { userContext } from "@/utils/UserContext";
 
 function Men() {
   const { user, setUser } = useContext(userContext);
-
-  const [menClothes, setMenClothes] = useState([]);
+  const [item,setItems]=useState("all")
+  const [menProduct, setMenProduct] = useState([]);
   const [products, setProducts] = useState(null);
 
-  const allMenClothes = async () => {
+  const allMenProduct = async () => {
+    console.log(item)
     try {
       const response = await axios.get(
         `http://localhost:3000/product/sendData`,
         {
           params: {
             category: "men",
+            item:item
           },
         }
       );
 
-      setMenClothes(response.data.data);
+      setMenProduct(response.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -67,7 +69,7 @@ function Men() {
     try {
       // Find the item in the cart
       const itemIndex = user.cart.findIndex((item) => item._id === id);
-  
+
       if (itemIndex !== -1) {
         // Optimistically update the state
         setUser((prev) => {
@@ -75,7 +77,7 @@ function Men() {
           updatedUser.cart = updatedUser.cart.filter((item) => item._id !== id); // Remove the item
           return [updatedUser]; // Return the updated user state
         });
-  
+
         // Make the API call to update the backend
         const response = await axios.post(
           "http://localhost:3000/users/removeFCart",
@@ -84,7 +86,7 @@ function Men() {
             email: Cookies.get("email"), // Use the user's email to identify them
           }
         );
-  
+
         if (response.status === 200) {
           toast.success("Item removed from cart successfully!");
         } else {
@@ -98,110 +100,124 @@ function Men() {
       toast.error("An error occurred while removing the item from the cart.");
     }
   };
-  
 
   useEffect(() => {
-    allMenClothes();
-  }, [products]);
+    allMenProduct();
+  }, [products,item]);
 
   return (
-    <div className="flex gap-2 text-white flex-wrap overflow-y-auto h-full  w-full p-4">
-      {menClothes.map((item, i) => {
-        return (
-          <Link
-            onClick={() => setProducts(item)}
-            key={i}
-            className="h-[50%] p-2 rounded-lg inline-block w-[19.5%] bg-zinc-700"
-          >
-            <img
-              className="h-[90%] w-full object-cover"
-              src={`data:image/jpeg;base64,${Buffer.from(
-                item.image.data
-              ).toString("base64")}`}
-              alt=""
-            />
-            <h1 className="text-xl text-center mt-1 text-orange-300">
-              {item.name}
-            </h1>
-          </Link>
-        );
-      })}
-      {products && (
-        <div className="h-[80%] p-4 w-[60%] flex gap-6 left-[20%] top-[15%] absolute backdrop-blur-md bg-black bg-opacity-30 rounded-lg">
-          <div
-            onClick={() => setProducts(null)}
-            className="h-[25px] w-[30px] text-center absolute left-[95%] top-[2%] bg-black rounded-2xl text-white cursor-pointer 
+    <>
+      
+      <div className="flex gap-2 text-white flex-wrap overflow-y-auto h-full  w-full p-4">
+      <div className="absolute top-15 mt-2">
+       <select 
+       onChange={(e) => setItems(e.target.value)}
+       className="p-2  rounded-lg bg-zinc-700 text-white">
+         <option value="all">All</option>
+         <option value="goggles">Goggles</option>
+         <option value="shoes">Shoes</option>
+         <option value="clothes">Clothes</option>
+         <option value="belt">Belt</option>
+       </select>
+     </div>
+        {menProduct.map((item, i) => {
+          return (
+            <Link
+              onClick={() => setProducts(item)}
+              key={i}
+              className="h-[50%] p-2 rounded-lg inline-block w-[19.5%] bg-zinc-700"
+            >
+              <img
+                className="h-[90%] w-full object-cover"
+                src={`data:image/jpeg;base64,${Buffer.from(
+                  item.image.data
+                ).toString("base64")}`}
+                alt=""
+              />
+              <h1 className="text-xl text-center mt-1 text-orange-300">
+                {item.name}
+              </h1>
+            </Link>
+          );
+        })}
+        {products && (
+          <div className="h-[80%] p-4 w-[60%] flex gap-6 left-[20%] top-[15%] absolute backdrop-blur-md bg-black bg-opacity-30 rounded-lg">
+            <div
+              onClick={() => setProducts(null)}
+              className="h-[25px] w-[30px] text-center absolute left-[95%] top-[2%] bg-black rounded-2xl text-white cursor-pointer 
              transition-transform duration-500 ease-in-out hover:scale-110 hover:bg-red-500"
-          >
-            <i className="ri-close-large-line"></i>
-          </div>
-          <div className="min-w-[50%] rounded-md overflow-hidden h-[98%] bg-red-400">
-            <img
-              src={`data:image/jpeg;base64,${Buffer.from(
-                products.image.data
-              ).toString("base64")}`}
-              className="h-full w-full object-cover"
-              alt=""
-            />
-          </div>
-          <div>
-            <h1 className="text-3xl font-serif  text-orange-300">
-              Title:
-              <span className="text-xl font-sans text-white align-middle ml-2 ">
-                {products.name}
-              </span>
-            </h1>
-            <p className="text-3xl mt-5 font-serif  text-orange-300">
-              Description:
-              <span className="text-xl text-white font-sans  align-middle ml-2 ">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga
-                asperiores eos nesciunt ipsam necessitatibus error ipsum
-                voluptas expedita sint quos numquam ducimus doloremque,
-                obcaecati, fugit quod magnam ex! In, reprehenderit!
-              </span>
-            </p>
-            <h1 className="text-3xl mt-5 font-serif text-orange-300">
-              Category:
-              <span className="text-xl font-sans  text-white align-middle ml-2 ">
-                {products.category}
-              </span>
-            </h1>
-            <h1 className="text-3xl mt-5 font-serif text-orange-300">
-              Price:
-              <span className="text-xl font-sans  text-white align-middle ml-2 ">
-                ${products.price}
-              </span>
-            </h1>
-            <h1 className="text-3xl mt-5 font-serif text-orange-300">
-              Discount:
-              <span className="text-xl  text-white font-sans align-middle ml-2 ">
-                {products.discount}%
-              </span>
-            </h1>
+            >
+              <i className="ri-close-large-line"></i>
+            </div>
+            <div className="min-w-[50%] rounded-md overflow-hidden h-[98%] bg-red-400">
+              <img
+                src={`data:image/jpeg;base64,${Buffer.from(
+                  products.image.data
+                ).toString("base64")}`}
+                className="h-full w-full object-cover"
+                alt=""
+              />
+            </div>
+            <div>
+              <h1 className="text-3xl font-serif  text-orange-300">
+                Title:
+                <span className="text-xl font-sans text-white align-middle ml-2 ">
+                  {products.name}
+                </span>
+              </h1>
+              <p className="text-3xl mt-5 font-serif  text-orange-300">
+                Description:
+                <span className="text-xl text-white font-sans  align-middle ml-2 ">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga
+                  asperiores eos nesciunt ipsam necessitatibus error ipsum
+                  voluptas expedita sint quos numquam ducimus doloremque,
+                  obcaecati, fugit quod magnam ex! In, reprehenderit!
+                </span>
+              </p>
+              <h1 className="text-3xl mt-5 font-serif text-orange-300">
+                Category:
+                <span className="text-xl font-sans  text-white align-middle ml-2 ">
+                  {products.category}
+                </span>
+              </h1>
+              <h1 className="text-3xl mt-5 font-serif text-orange-300">
+                Price:
+                <span className="text-xl font-sans  text-white align-middle ml-2 ">
+                  ${products.price}
+                </span>
+              </h1>
+              <h1 className="text-3xl mt-5 font-serif text-orange-300">
+                Discount:
+                <span className="text-xl  text-white font-sans align-middle ml-2 ">
+                  {products.discount}%
+                </span>
+              </h1>
 
-            {user?.cart?.some(
-              (cartItem) => cartItem._id.toString() === products._id.toString()
-            ) ? (
-              <button
-                onClick={() => removeFromtheCart(products._id)}
-                type="button"
-                className="px-5 py-2 bg-red-500 mt-[10%] rounded-lg text-2xl"
-              >
-                Remove from Cart!
-              </button>
-            ) : (
-              <button
-                onClick={() => addtoCart(products._id)}
-                type="button"
-                className="px-5 py-2 bg-blue-500 mt-[10%] rounded-lg text-2xl"
-              >
-                Add to Cart!
-              </button>
-            )}
+              {user?.cart?.some(
+                (cartItem) =>
+                  cartItem._id.toString() === products._id.toString()
+              ) ? (
+                <button
+                  onClick={() => removeFromtheCart(products._id)}
+                  type="button"
+                  className="px-5 py-2 bg-red-500 mt-[10%] rounded-lg text-2xl"
+                >
+                  Remove from Cart!
+                </button>
+              ) : (
+                <button
+                  onClick={() => addtoCart(products._id)}
+                  type="button"
+                  className="px-5 py-2 bg-blue-500 mt-[10%] rounded-lg text-2xl"
+                >
+                  Add to Cart!
+                </button>
+              )}
+            </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 }
 

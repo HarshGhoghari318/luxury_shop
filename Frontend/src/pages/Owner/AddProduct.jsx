@@ -8,6 +8,7 @@ function AddProduct() {
     discount: '',
     name: '',
     category: 'men',
+    subCategory:''
   });
 
   const handleChange = (e) => {
@@ -27,6 +28,7 @@ function AddProduct() {
     data.append("discount", formData.discount);
     data.append("name", formData.name);
     data.append("category", formData.category);
+    data.append("subCategory", formData.subCategory);
     
     try {
       const response= await axios.post("http://localhost:3000/product/create",data,
@@ -42,6 +44,7 @@ function AddProduct() {
         discount: '',
         name: '',
         category: 'men',
+        subCategory:''
       })
       toast.success(response.data.message,{autoClose:4000});
      
@@ -139,6 +142,23 @@ function AddProduct() {
               <option value="men">Men</option>
               <option value="women">Women</option>
               <option value="kids">Kids</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-orange-300 font-medium mb-2" htmlFor="category">
+              SubCategory
+            </label>
+            <select
+              name="subCategory"
+              id="category"
+              value={formData.subCategory}
+              onChange={handleChange}
+              className="w-full border border-orange-300 bg-gray-900 text-white rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-300"
+            >
+            <option value="goggles">Goggles</option>
+            <option value="shoes">Shoes</option>
+            <option value="clothes">Clothes</option>
+            <option value="belt">Belt</option>
             </select>
           </div>
 

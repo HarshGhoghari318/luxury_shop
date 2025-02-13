@@ -9,21 +9,23 @@ import { toast } from "react-toastify";
 
 function Women() {
   const [products, setProducts] = useState(null);
-  const [WomenClothes, setWomenClothes] = useState([]);
+  const [WomenProduct, setWomenProduct] = useState([]);
   const { user ,setUser} =useContext(userContext);
+  const [item,setItems]=useState("all")
 
-  const allWomenClothes = async () => {
+  const allWomenProduct = async () => {
     try {
       const response = await axios.get(
         `http://localhost:3000/product/sendData`,
         {
           params: {
             category: "women",
+            item: item
           },
         }
       );
 
-      setWomenClothes(response.data.data);
+      setWomenProduct(response.data.data);
       
     } catch (error) {
       console.log(error);
@@ -102,12 +104,23 @@ function Women() {
 
 
   useEffect(() => {
-    allWomenClothes();
-  }, [products]);
+    allWomenProduct();
+  }, [products,item]);
 
   return (
     <div className="flex gap-2 text-white flex-wrap overflow-y-auto h-full  w-full p-4">
-      {WomenClothes.map((item, i) => {
+      <div className="absolute top-15 mt-2">
+       <select 
+       onChange={(e) => setItems(e.target.value)}
+       className="p-2  rounded-lg bg-zinc-700 text-white">
+         <option value="all">All</option>
+         <option value="goggles">Goggles</option>
+         <option value="shoes">Shoes</option>
+         <option value="clothes">Clothes</option>
+         <option value="belt">Belt</option>
+       </select>
+     </div>
+      {WomenProduct.map((item, i) => {
         return (
           <Link
             onClick={() => {
