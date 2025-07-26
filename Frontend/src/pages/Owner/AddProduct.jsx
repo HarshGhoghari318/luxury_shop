@@ -31,7 +31,7 @@ function AddProduct() {
     data.append("subCategory", formData.subCategory);
     
     try {
-      const response= await axios.post("http://localhost:3000/product/create",data,
+      const response= await axios.post(`${process.env.REACT_APP_API_URL}/product/create`,data,
         {
           headers: {
             'Content-Type': 'multipart/form-data',

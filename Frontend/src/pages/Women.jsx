@@ -16,7 +16,7 @@ function Women() {
   const allWomenProduct = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/product/sendData`,
+        `${process.env.REACT_APP_API_URL}/product/sendData`,
         {
           params: {
             category: "women",
@@ -48,7 +48,7 @@ function Women() {
       });
   
       const response = await axios.post(
-        "http://localhost:3000/users/addtoCart",
+        `${process.env.REACT_APP_API_URL}/users/addtoCart`,
         {
           id: id,
           email: Cookies.get("email"),
@@ -81,7 +81,7 @@ function Women() {
   
         // Make the API call to update the backend
         const response = await axios.post(
-          "http://localhost:3000/users/removeFCart",
+          `${process.env.REACT_APP_API_URL}/users/removeFCart`,
           {
             id: id,
             email: Cookies.get("email"), // Use the user's email to identify them

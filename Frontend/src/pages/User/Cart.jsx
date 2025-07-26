@@ -26,7 +26,7 @@ function Cart() {
   const handlePlus = async (itemId) => {
     console.log(itemId);
     const response = await axios.post(
-      "http://localhost:3000/users/pmngQuantity",
+      `${process.env.REACT_APP_API_URL}/users/pmngQuantity`,
       {
         id: itemId,
         email: Cookies.get("email"),
@@ -71,7 +71,7 @@ function Cart() {
       return { ...prevUser, cart: updatedCart };
     });
     const response = await axios.post(
-      "http://localhost:3000/users/removeFCart",
+      `${process.env.REACT_APP_API_URL}/users/removeFCart`,
       {
         id: itemId,
         email: Cookies.get("email"),
@@ -99,7 +99,7 @@ function Cart() {
     try {
       setBill(false)
       console.log(user?.cart);
-      const response = await axios.post("http://localhost:3000/users/orders", {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/users/orders`, {
         data: user?.cart,
         email: Cookies.get("email"),
       });

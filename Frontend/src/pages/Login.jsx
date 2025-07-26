@@ -26,7 +26,7 @@ function Login() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3000/users/login",
+        `${process.env.REACT_APP_API_URL}/users/login`,
         formdata
       );
       console.log(response);
