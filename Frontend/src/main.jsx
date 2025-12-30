@@ -8,11 +8,12 @@ import UserContext from "./utils/UserContext.jsx"; // Corrected import
 import { HashRouter } from "react-router-dom";
 
 createRoot(document.getElementById("root")).render(
-  <BrowserRouter>
+  <HashRouter>
     <Context>
-      <HashRouter>
+      
         <App />
-      </HashRouter>
+     
     </Context>
-  </BrowserRouter>
+  </HashRouter>
+  
 );
