@@ -8,7 +8,7 @@ function AddProduct() {
     discount: '',
     name: '',
     category: 'men',
-    subCategory:''
+    subCategory:'Googles'
   });
 
   const handleChange = (e) => {
@@ -29,15 +29,17 @@ function AddProduct() {
     data.append("name", formData.name);
     data.append("category", formData.category);
     data.append("subCategory", formData.subCategory);
+     
     
     try {
-      const response= await axios.post(`${process.env.REACT_APP_API_URL}/product/create`,data,
+      const response= await axios.post(`http://localhost:3000/product/create`,data,
         {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
         }
       )
+      
       setFormData({
         image: "null",
         price: '',
@@ -155,10 +157,10 @@ function AddProduct() {
               onChange={handleChange}
               className="w-full border border-orange-300 bg-gray-900 text-white rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-300"
             >
-            <option value="goggles">Goggles</option>
-            <option value="shoes">Shoes</option>
-            <option value="clothes">Clothes</option>
-            <option value="belt">Belt</option>
+            <option value="Goggles">Goggles</option>
+            <option value="Shoes">Shoes</option>
+            <option value="Clothes">Clothes</option>
+            <option value="Belt">Belt</option>
             </select>
           </div>
 

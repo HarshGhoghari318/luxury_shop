@@ -10,7 +10,7 @@ function User() {
   const navigate=useNavigate()
   const location = useLocation();
   const {user,getUser} = useContext(userContext)
- console.log(user)
+
   
   
   useEffect(() => {
@@ -103,7 +103,7 @@ function User() {
             >
               <span className="mr-1 ">🛒</span> Cart{" "}
               {user?.cart?.length > 0 && (
-                <span className="h-[20px] absolute left-[93.1%] top-[3%] w-[20px] flex items-center justify-center rounded-3xl text-white bg-red-600 text-center">
+                <span className="h-[15px] absolute left-[86.1%] top-[3%] w-[15px] flex items-center justify-center rounded-3xl text-white bg-red-600 text-center">
                   {user.cart.length}
                 </span>
               )}

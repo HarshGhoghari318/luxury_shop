@@ -16,7 +16,7 @@ function Kids() {
   const allkidsProduct = async () => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/product/sendData`,
+        `http://localhost:3000/product/sendData`,
         {
           params: {
             category: "kids",
@@ -48,7 +48,7 @@ function Kids() {
       });
 
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/users/addtoCart`,
+        `http://localhost:3000/users/addtoCart`,
         {
           id: id,
           email: Cookies.get("email"),
@@ -81,7 +81,7 @@ function Kids() {
   
         // Make the API call to update the backend
         const response = await axios.post(
-          `${process.env.R}/users/removeFCart`,
+          `http://localhost:3000/users/removeFCart`,
           {
             id: id,
             email: Cookies.get("email"), // Use the user's email to identify them
@@ -112,10 +112,10 @@ function Kids() {
        onChange={(e) => setItems(e.target.value)}
        className="p-2  rounded-lg bg-zinc-700 text-white">
          <option value="all">All</option>
-         <option value="goggles">Goggles</option>
-         <option value="shoes">Shoes</option>
-         <option value="clothes">Clothes</option>
-         <option value="belt">Belt</option>
+         <option value="Goggles">Goggles</option>
+         <option value="Shoes">Shoes</option>
+         <option value="Clothes">Clothes</option>
+         <option value="Belt">Belt</option>
        </select>
      </div>
       {KidProduct.map((item, i) => {

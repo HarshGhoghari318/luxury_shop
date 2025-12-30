@@ -2,11 +2,12 @@ import { userContext } from "@/utils/UserContext";
 import React, { useContext } from "react";
 import Cookies from 'js-cookie';
 import { Buffer } from "buffer";
+import { toast } from "react-toastify";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 const ProfilePage = () => {
   const navigater=useNavigate()
   const {user,setUser}=useContext(userContext)
-  console.log(user)
+  
 
    const navigateBack=()=>{
     navigater(-1);
@@ -126,9 +127,7 @@ const ProfilePage = () => {
 
       {/* Footer */}
       <footer className="flex justify-center gap-4 p-6 bg-gray-800">
-        <button className="bg-orange-500 hover:bg-orange-600 text-black px-4 py-2 rounded-lg">
-          Settings
-        </button>
+
         <button onClick={handlelogOut} className="bg-orange-500 hover:bg-orange-600 text-black px-4 py-2 rounded-lg">
           Logout
         </button>

@@ -61,10 +61,12 @@ router.post("/addtoCart", async (req, res) => {
    
   try {
     const user = await userModel.findOne({ email: req.body.email });
-
+    
+    if(user.cart){}
     const isItemInCart = user.cart.some(
       (item) => item.toString() === req.body.id
     );
+    
     // console.log(isItemInCart);
 
     if (!isItemInCart) {
@@ -92,21 +94,57 @@ router.post("/removeFCart", async (req, res) => {
  
 });
 
-router.post('/pmngQuantity', async (req, res) => {
-  const user = await userModel.findOne({ email: req.body.email }).populate("cart");
+// router.post('/pmngQuantity', async (req, res) => {
+//   const user = await userModel.findOne({ email: req.body.email }).populate("cart");
 
-  const idx = user.cart.findIndex((item) => item._id.toString() === req.body.id);
-  // console.log(idx)
+//   const idx = user.cart.findIndex((item) => item._id.toString() === req.body.id);
+//   // console.log(idx)
 
-  if (idx !== -1) {
-    user.cart[idx].quantity += user?.cart[idx].quantity;
-    // console.log(user.cart[idx].quantity)
+//   if (idx !== -1) {
+//     user.cart[idx].quantity += user?.cart[idx].quantity;
+//     // console.log(user.cart[idx].quantity)
+//     await user.save();
+//     res.status(200).json({ message: "Quantity incremented", updatedCart: user.cart });
+//   } else {
+//     res.status(404).json({ message: "Item not found in cart" });
+//   }
+// });
+router.post("/pmngQuantity", async (req, res) => {
+  try {
+    const { id, email, type } = req.body;
+
+    const user = await userModel.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const cartItem = user.cart.find(
+      (item) => item._id.toString() === id
+    );
+
+    if (!cartItem) {
+      return res.status(404).json({ message: "Item not found in cart" });
+    }
+
+    if (type === "plus") {
+      cartItem.quantity += 1;
+    } else if (type === "minus" && cartItem.quantity > 1) {
+      cartItem.quantity -= 1;
+    }
+
     await user.save();
-    res.status(200).json({ message: "Quantity incremented", updatedCart: user.cart });
-  } else {
-    res.status(404).json({ message: "Item not found in cart" });
+
+    res.status(200).json({
+      message: "Quantity updated",
+      updatedCart: user.cart,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
   }
 });
+
 
 router.post('/orders', async (req, res) => {
   try {

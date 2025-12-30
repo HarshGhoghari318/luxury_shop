@@ -23,7 +23,7 @@ function Signup() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/users/signup`,
+        `http://localhost:3000/users/signup`,
         formdata
       );
       if (response.data.data === null) {
@@ -38,7 +38,7 @@ function Signup() {
         });
       } else {
         toast.success("Sign up successful!");
-        console.log("Response:", response.data);
+        
         setFormdata({
           username: "",
           email: "",

@@ -10,7 +10,7 @@ function Login() {
  
 
   const {user,setUser}=useContext(userContext)
-  console.log(user)
+  
   const navigate = useNavigate();
 
   const [formdata, setFormdata] = useState({
@@ -26,10 +26,10 @@ function Login() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/users/login`,
+        `http://localhost:3000/users/login`,
         formdata
       );
-      console.log(response);
+      
       if (response.data.data === null) {
         toast.error("Invalid credentials. Please try again.");
       } else if (response.data.message === "user") {
@@ -41,12 +41,12 @@ function Login() {
         });
       }
       else if (response.data.message === "owner") {
-        console.log(response.data.data)
+        
         setUser(response.data.data)
         navigate("/owner/allProduct", {
           state: { toastMessage: `welcome ${response.data.data.ownername}` },
         });
-        console.log(user)
+        
         
         Cookies.set('email', response.data.data.email)
       }
@@ -65,7 +65,7 @@ function Login() {
             <input
               name="email"
               onChange={handleChange}
-              pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$"
+              pattern="^[a-zA-Z0-9._%+\-]+@gmail\.com$"
               type="email"
               value={formdata.email}
               className="w-full p-2 rounded bg-zinc-800 text-white focus:outline-orange-300"

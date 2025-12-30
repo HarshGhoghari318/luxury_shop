@@ -14,14 +14,14 @@ function AllProduct() {
     const allProduct = async () => {
 
         try {
-          const response = await axios.get(`${process.env.REACT_APP_API_URL}/product/sendData`,{
+          const response = await axios.get(`http://localhost:3000/product/sendData`,{
             params: {
               category: category
             }
           });
          
           setProduct(response.data.data);
-          console.log(product)
+         
          
 
         
@@ -65,7 +65,7 @@ useEffect(()=>{
         <div className="w-full h-[90%] flex flex-shrink-0 overflow-y-auto flex-wrap gap-3">
             {product.map((item,i)=>{
                 return(
-                    <div className="p-4 rounded-md h-[40vh] w-[18vw] bg-zinc-950 mt-2 hover:border-2 ">
+                    <div key={i} className="p-4 rounded-md h-[40vh] w-[18vw] bg-zinc-950 mt-2 hover:border-2 ">
                     <img
                       className=" rounded-md overflow-hidden object-cover bg-black h-[70%] w-full"
                       src={`data:image/jpeg;base64,${Buffer.from(item.image.data).toString('base64')}`}

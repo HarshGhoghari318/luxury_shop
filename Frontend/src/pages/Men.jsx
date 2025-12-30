@@ -14,18 +14,17 @@ function Men() {
   const [products, setProducts] = useState(null);
 
   const allMenProduct = async () => {
-    console.log(item)
+    
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/product/sendData`,
+        `http://localhost:3000/product/sendData`,
         {
           params: {
             category: "men",
-            item:item
+            item,
           },
         }
       );
-
       setMenProduct(response.data.data);
     } catch (error) {
       console.log(error);
@@ -47,7 +46,7 @@ function Men() {
       });
 
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/users/addtoCart`,
+        `http://localhost:3000/users/addtoCart`,
         {
           id: id,
           email: Cookies.get("email"),
@@ -80,7 +79,7 @@ function Men() {
 
         // Make the API call to update the backend
         const response = await axios.post(
-          `${process.env.REACT_APP_API_URL}/users/removeFCart`,
+          `http://localhost:3000/users/removeFCart`,
           {
             id: id,
             email: Cookies.get("email"), // Use the user's email to identify them
@@ -103,21 +102,21 @@ function Men() {
 
   useEffect(() => {
     allMenProduct();
-  }, [products,item]);
+  }, [item,products]);
 
   return (
     <>
       
       <div className="flex gap-2 text-white flex-wrap overflow-y-auto h-full  w-full p-4">
       <div className="absolute top-15 mt-2">
-       <select 
+      <select 
        onChange={(e) => setItems(e.target.value)}
        className="p-2  rounded-lg bg-zinc-700 text-white">
          <option value="all">All</option>
-         <option value="goggles">Goggles</option>
-         <option value="shoes">Shoes</option>
-         <option value="clothes">Clothes</option>
-         <option value="belt">Belt</option>
+         <option value="Goggles">Goggles</option>
+         <option value="Shoes">Shoes</option>
+         <option value="Clothes">Clothes</option>
+         <option value="Belt">Belt</option>
        </select>
      </div>
         {menProduct.map((item, i) => {

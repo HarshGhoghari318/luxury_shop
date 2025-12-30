@@ -24,7 +24,7 @@ function Owner() {
   }
   useEffect(() => {
     if (location.state && location.state.toastMessage) {
-      console.log(user);
+      
       toast.success(location.state.toastMessage);
     }
   }, [location.state]);

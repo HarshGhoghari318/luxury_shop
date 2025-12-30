@@ -6,7 +6,7 @@ const UsersPage = () => {
 
   const allUser = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/owner/allusers`);
+      const response = await axios.get(`http://localhost:3000/owner/allusers`);
       
       setUsers(response.data); 
     } catch (error) {
