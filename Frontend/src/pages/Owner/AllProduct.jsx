@@ -14,7 +14,7 @@ function AllProduct() {
     const allProduct = async () => {
 
         try {
-          const response = await axios.get(`http://localhost:3000/product/sendData`,{
+          const response = await axios.get(`${process.env.VERCEL_URL}/product/sendData`,{
             params: {
               category: category
             }

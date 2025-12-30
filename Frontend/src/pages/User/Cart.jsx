@@ -26,7 +26,7 @@ function Cart() {
     }));
 
     try {
-      await axios.post("http://localhost:3000/users/pmngQuantity", {
+      await axios.post(`${process.env.VERCEL_URL}/users/pmngQuantity`, {
         id: itemId,
         email: Cookies.get("email"),
         type: "plus",
@@ -48,7 +48,7 @@ function Cart() {
     }));
 
     try {
-      await axios.post("http://localhost:3000/users/pmngQuantity", {
+      await axios.post(`${process.env.VERCEL_URL}/users/pmngQuantity`, {
         id: itemId,
         email: Cookies.get("email"),
         type: "minus",
@@ -66,7 +66,7 @@ function Cart() {
     }));
 
     try {
-      await axios.post("http://localhost:3000/users/removeFCart", {
+      await axios.post(`${process.env.VERCEL_URL}/users/removeFCart`, {
         id: itemId,
         email: Cookies.get("email"),
       });
@@ -98,7 +98,7 @@ function Cart() {
 
   const handleYes = async () => {
     try {
-      await axios.post("http://localhost:3000/users/orders", {
+      await axios.post(`${process.env.VERCEL_URL}/users/orders`, {
         data: user.cart,
         email: Cookies.get("email"),
       });

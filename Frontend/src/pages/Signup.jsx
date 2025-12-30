@@ -23,7 +23,7 @@ function Signup() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `http://localhost:3000/users/signup`,
+        `${process.env.VERCEL_URL}/users/signup`,
         formdata
       );
       if (response.data.data === null) {

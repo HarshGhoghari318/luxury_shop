@@ -46,7 +46,7 @@ function EditProfile() {
       
     
           try {
-            const response = await axios.post(`http://localhost:3000/users/Eprofile`, {
+            const response = await axios.post(`${process.env.VERCEL_URL}/users/Eprofile`, {
                 username: name,
                 sex: sex,
                 address: address,

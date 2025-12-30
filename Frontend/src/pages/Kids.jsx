@@ -16,7 +16,7 @@ function Kids() {
   const allkidsProduct = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/product/sendData`,
+        `${process.env.VERCEL_URL}/product/sendData`,
         {
           params: {
             category: "kids",
@@ -48,7 +48,7 @@ function Kids() {
       });
 
       const response = await axios.post(
-        `http://localhost:3000/users/addtoCart`,
+        `${process.env.VERCEL_URL}/users/addtoCart`,
         {
           id: id,
           email: Cookies.get("email"),
@@ -81,7 +81,7 @@ function Kids() {
   
         // Make the API call to update the backend
         const response = await axios.post(
-          `http://localhost:3000/users/removeFCart`,
+          `${process.env.VERCEL_URL}/users/removeFCart`,
           {
             id: id,
             email: Cookies.get("email"), // Use the user's email to identify them

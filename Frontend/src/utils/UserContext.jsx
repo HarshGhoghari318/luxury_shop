@@ -13,7 +13,7 @@ function UserContext({ children }) {
 
   const getUser = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/users/user`, {
+      const response = await axios.get(`${process.env.VERCEL_URL}/users/user`, {
         params: {
           email: Cookies.get("email"),
         },

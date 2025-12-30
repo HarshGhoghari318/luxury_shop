@@ -32,7 +32,7 @@ function AddProduct() {
      
     
     try {
-      const response= await axios.post(`http://localhost:3000/product/create`,data,
+      const response= await axios.post(`${process.env.VERCEL_URL}/product/create`,data,
         {
           headers: {
             'Content-Type': 'multipart/form-data',
